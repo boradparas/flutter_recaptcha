@@ -1,17 +1,15 @@
 name: recaptchav2_plugin
 description: A Flutter plugin for Google ReCAPTCHA V2. This plugin requires Webview to use Google ReCaptcha.
 version: 1.0.0
-author: Software-Incubator <deepanshut041@gmail.com>
-homepage: https://github.com/Software-Incubator/flutter_recaptcha.git
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter: ^0.3.4
-  http: ^0.12.0+1
+  webview_flutter: ^4.4.2
+  http: ^1.1.2
 
 dev_dependencies:
   flutter_test:
