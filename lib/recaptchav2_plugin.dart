@@ -75,7 +75,15 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
     await webViewController
         .loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
 
+    await webViewController.setNavigationDelegate(NavigationDelegate(
+      onPageStarted: (url) {
+        print("Page started loading: $url");
+      },
+      onPageFinished: (url) => print("Page finished loading: $url"),
+    ));
+
     setState(() {
+      print('webViewController is initialized');
       isControllerInitialized = true;
     });
   }
