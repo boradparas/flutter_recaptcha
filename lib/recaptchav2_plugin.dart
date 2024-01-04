@@ -64,6 +64,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
     await webViewController.addJavaScriptChannel(
       'RecaptchaFlutterChannel',
       onMessageReceived: (receiver) {
+        print('Received message from javascript: ${receiver.message}');
         String _token = receiver.message;
         if (_token.contains("verify")) {
           _token = _token.substring(7);
