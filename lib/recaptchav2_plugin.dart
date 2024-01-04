@@ -79,7 +79,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
     webViewController
         .loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
     isControllerInitialized = true;
-    return widget.controller.visible
+    return widget.controller.visible && isControllerInitialized
         ? Stack(
             children: <Widget>[
               WebViewWidget(
@@ -97,7 +97,11 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
               ),
             ],
           )
-        : const SizedBox();
+        : Container(
+            height: 100,
+            width: 100,
+            color: Colors.red,
+          );
   }
 }
 
