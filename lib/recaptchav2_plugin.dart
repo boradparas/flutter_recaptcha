@@ -57,27 +57,20 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
 
   @override
   Widget build(BuildContext context) {
-    webViewController = WebViewController();
-    webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
-    webViewController.setBackgroundColor(const Color(0x00000000));
-    webViewController.setNavigationDelegate(
-      NavigationDelegate(
-        onProgress: (int progress) {
-          // Update loading bar.
-        },
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
-            return NavigationDecision.prevent;
+    webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel(
+        'RecaptchaFlutterChannel',
+        onMessageReceived: (receiver) {
+          String _token = receiver.message;
+          if (_token.contains("verify")) {
+            _token = _token.substring(7);
           }
-          return NavigationDecision.navigate;
+          widget.response(_token);
+          widget.controller.hide();
         },
-      ),
-    );
-    webViewController
-        .loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
+      )
+      ..loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
     isControllerInitialized = true;
     return widget.controller.visible && isControllerInitialized
         ? Stack(
