@@ -32,7 +32,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
       webViewController.reload();
     }
     setState(() {
-      widget.controller.visible;
+      widget.controller.show();
     });
   }
 
@@ -84,13 +84,14 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
 
     setState(() {
       print('webViewController is initialized');
+      widget.controller.show();
       isControllerInitialized = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.controller.visible && isControllerInitialized
+    return widget.controller.visible
         ? Stack(
             children: <Widget>[
               WebViewWidget(
