@@ -38,6 +38,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
   void initState() {
     super.initState();
     widget.controller.addListener(onListen);
+    _loadTheController();
   }
 
   @override
@@ -55,23 +56,30 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
     super.dispose();
   }
 
+  Future<void> _loadTheController() async {
+    webViewController = WebViewController();
+    await webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
+    await webViewController.addJavaScriptChannel(
+      'RecaptchaFlutterChannel',
+      onMessageReceived: (receiver) {
+        String _token = receiver.message;
+        if (_token.contains("verify")) {
+          _token = _token.substring(7);
+        }
+        widget.response(_token);
+        widget.controller.hide();
+      },
+    );
+    await webViewController
+        .loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
+
+    setState(() {
+      isControllerInitialized = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..addJavaScriptChannel(
-        'RecaptchaFlutterChannel',
-        onMessageReceived: (receiver) {
-          String _token = receiver.message;
-          if (_token.contains("verify")) {
-            _token = _token.substring(7);
-          }
-          widget.response(_token);
-          widget.controller.hide();
-        },
-      )
-      ..loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
-    isControllerInitialized = true;
     return widget.controller.visible && isControllerInitialized
         ? Stack(
             children: <Widget>[
