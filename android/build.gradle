@@ -23,6 +23,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 34
+    namespace 'in.silive.recaptchav2_plugin'
 
     defaultConfig {
         minSdkVersion 21
