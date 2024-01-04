@@ -69,6 +69,7 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
           _token = _token.substring(7);
         }
         widget.response(_token);
+        print("Token is: $_token");
         widget.controller.hide();
       },
     );
