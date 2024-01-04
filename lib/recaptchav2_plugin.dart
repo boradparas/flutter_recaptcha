@@ -91,11 +91,14 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.controller.visible
+    return widget.controller.visible && isControllerInitialized
         ? Stack(
             children: <Widget>[
-              WebViewWidget(
-                controller: webViewController,
+              SizedBox(
+                height: 200,
+                child: WebViewWidget(
+                  controller: webViewController,
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
