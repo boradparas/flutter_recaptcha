@@ -74,6 +74,9 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
         widget.controller.hide();
       },
     );
+    webViewController.runJavaScript(
+      'Toaster.postMessage("User Agent: " + navigator.userAgent);',
+    );
     await webViewController
         .loadRequest(Uri.parse("${widget.pluginURL}?api_key=${widget.apiKey}"));
 
