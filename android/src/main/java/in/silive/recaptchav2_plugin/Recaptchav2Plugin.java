@@ -19,14 +19,6 @@ public class Recaptchav2Plugin implements FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(this);
   }
 
-  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-  // plugin registration via this function while apps migrate to use the new Android APIs
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "recaptchav2_plugin");
-    channel.setMethodCallHandler(new Recaptchav2Plugin());
-  }
-
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     if (call.method.equals("getPlatformVersion")) {
