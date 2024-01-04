@@ -31,7 +31,9 @@ class _RecaptchaV2State extends State<RecaptchaV2> {
       webViewController.clearCache();
       webViewController.reload();
     }
-    setState(() {});
+    setState(() {
+      widget.controller.visible;
+    });
   }
 
   @override
